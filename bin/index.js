@@ -56,7 +56,7 @@ const { argv } = yargs
       alias: 'minimal',
       describe: 'Remove borders & padding from table',
       type: 'boolean',
-      default: false,
+      default: false
     },
     t: {
       alias: 'top',
@@ -67,7 +67,7 @@ const { argv } = yargs
       alias: 'graph',
       describe: 'Get graph',
       type: 'boolean',
-      default: false,
+      default: false
     }
   })
   .strict()
@@ -76,13 +76,12 @@ const { argv } = yargs
 argv.countryCode = argv.country;
 if (argv.source === 2) {
   getWorldoMetersTable(argv).then(console.log).catch(console.error);
-}
-else if (argv.graph === true) {
+} else if (argv.graph === true) {
   getGraph(argv.countryCode).then(console.log).catch(console.error);
 } else {
   (
-    argv.country === 'ALL'
-      ? getCompleteTable(argv)
-      : getCountryTable(argv)
+    argv.country === 'ALL' ?
+      getCompleteTable(argv) :
+      getCountryTable(argv)
   ).then(console.log).catch(console.error);
 }

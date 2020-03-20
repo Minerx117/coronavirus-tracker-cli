@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const {
   getCountryTable,
   getJSONData,
-  getJSONDataForCountry,
+  getJSONDataForCountry
 } = require('./lib/byCountry');
 const { getCompleteTable, getGraph } = require('./lib/corona');
 const { lookupCountry, htmlTemplate } = require('./lib/helpers');
@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
   const source = req.query.source ? Number(req.query.source) : 1;
 
   if (source === 2) {
-    return getWorldoMetersTable({ isCurl, emojis, minimal, top, format})
+    return getWorldoMetersTable({ isCurl, emojis, minimal, top, format })
       .then(result => {
         return res.send(result);
       }).catch(error => errorHandler(error, res));
@@ -83,6 +83,7 @@ app.get(['/:country/graph', '/graph'], (req, res) => {
       .then(result => res.send(result))
       .catch(error => errorHandler(error, res));
   }
+
   const lookupObj = lookupCountry(country);
 
   if (!lookupObj) {
@@ -95,7 +96,8 @@ app.get(['/:country/graph', '/graph'], (req, res) => {
       - /Italy: for Italy.
     `);
   }
-  return getGraph({countryCode: lookupObj.iso2, isCurl })
+
+  return getGraph({ countryCode: lookupObj.iso2, isCurl })
     .then(result => res.send(result))
     .catch(error => errorHandler(error, res));
 });
@@ -105,9 +107,9 @@ app.get('/help', (req, res) => {
   if (!isCurl) {
     return res.send(htmlTemplate(helpContent));
   }
+
   return res.send(chalk.green(helpContent));
 });
-
 
 app.get('/:country', (req, res) => {
   const { country } = req.params;
@@ -142,7 +144,6 @@ app.get('/:country', (req, res) => {
       - /Italy: for Italy.
     `);
   }
-
 
   const { iso2 } = lookupObj;
 
